@@ -6,3 +6,10 @@ export const postProductList = (dataa: any) => {
     console.log(response.status, response.data.token);
   });
 };
+
+/**
+ * params: {
+ *  categories?: number[]
+ * }
+ *
+ */

@@ -1,9 +1,22 @@
-import React from "react";
+import React, { ReactNode } from "react";
+import { useShoppingCart } from "../../context/ShoppingCartContext";
+
 import styles from "./Modal.module.scss";
-const Modal = () => {
+type Props = {
+  children: ReactNode;
+  isOpen: boolean;
+  setIsOpen: (args: boolean) => void;
+};
+
+const Modal = ({ children, isOpen, setIsOpen }: Props) => {
+  const rootClasses = [styles.modal];
+
+  if (isOpen) {
+    rootClasses.push(styles.active);
+  }
   return (
-    <div className={styles.modal}>
-      <div className={styles.modal_content}></div>
+    <div onClick={() => setIsOpen(false)} className={rootClasses.join(" ")}>
+      <div className={styles.modalContent}>{children}</div>
     </div>
   );
 };

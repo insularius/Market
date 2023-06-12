@@ -8,14 +8,9 @@ type Props = {
 
 const FilterAccordion: React.FC<Props> = ({ onHandleToggle, value }) => {
   return (
-    <div className={styles.genre_dropdown}>
+    <div className={styles.genre_dropdown} onClick={() => onHandleToggle()}>
       <h3>{value}</h3>
-      <img
-        className={styles.star_icon}
-        src="./images/icon-bird.png"
-        alt=""
-        onClick={() => onHandleToggle()}
-      />
+      <img className={styles.star_icon} src="./images/icon-bird.png" alt="" />
     </div>
   );
 };

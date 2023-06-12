@@ -3,7 +3,7 @@ import React, { MouseEventHandler, PropsWithChildren } from "react";
 import styles from "./MyButton.module.scss";
 
 type Props = {
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   style?: any;
 };
 

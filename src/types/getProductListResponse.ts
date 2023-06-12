@@ -1,6 +1,6 @@
-import { product } from "./product";
+import { Productt } from "./product";
 export interface getProductListResponse {
-  data: [product];
+  data: Productt[];
   meta: {
     pagination: {
       page: number;

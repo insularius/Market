@@ -4,9 +4,8 @@ import { data } from "../../mock";
 import FilterMenu from "../../components/filterMenu/FilterMenu";
 import ProductList from "../../components/productsList/ProductList";
 import styles from "./ProductPage.module.scss";
-import { getProductList } from "../../services/getProductList";
-import { product } from "../../types/product";
-
+import { Productt } from "../../types/product";
+import { getProductsList } from "../../services/getProductsList";
 export type SearchState = {
   query?: string;
   description?: string;
@@ -14,8 +13,9 @@ export type SearchState = {
 
 const ProductPage: React.FC = () => {
   // const [products, setProducts] = useState<Product[]>(data);
-  const [productss, setProductss] = useState<product[]>([]);
-  const [category, setCategory] = useState<string>("");
+  const [productss, setProductss] = useState<Productt[]>([]);
+  // const [product, setProduct] = useState<Productt[]>([]);
+
   const [search, setSearch] = useState<SearchState>({
     query: "",
     description: "",
@@ -49,37 +49,20 @@ const ProductPage: React.FC = () => {
   //   );
   // }, [category]);
 
-  const onClickCategory = (v: string) => {
-    setCategory(v);
-  };
+  //можно попробовать по онклику передавать
+  // const onCategoryChange = (v: number) => {
+  //   getProductCategory(v).then((res) => setProductss(res.data));
+  // };
 
-  useEffect(() => {
-    console.log(productss);
-  }, []);
-
-  useEffect(() => {
-    getProductList().then((res) => setProductss(res.data));
-  }, []);
-
+  //получение всех продуктов
   // useEffect(() => {
-  //   const dataa: product = {
-  //     id: 2,
-  //     attributes: {
-  //       name: "string",
-  //       description: "string",
-  //       article: "string",
-  //       price: 4444,
-  //       updatedAt: "sdsds",
-  //       createdAt: "sdsdsd",
-  //       publishedAt: "dsdsd",
-  //     },
-  //   };
-  //   axios
-  //     .post("https://dario-cms.dar-dev.zone/api/daru-products", dataa)
-  //     .then((res) => {
-  //       setProductss(res.data);
-  //     });
-  // });
+  //   getProductList().then((res) => setProductss(res.data));
+  // }, []);
+
+  //изменённое получение продуктов с категориями (пустой объект передаём, так как в аргументах инпойнта принимаются объё)
+  useEffect(() => {
+    getProductsList({}).then((res) => setProductss(res.data));
+  }, []);
 
   const filteredData = useMemo(() => {
     return productss.filter((item) =>
@@ -89,29 +72,30 @@ const ProductPage: React.FC = () => {
     );
   }, [productss, search.query]);
 
-  const filrd = useMemo(() => {
-    return productss.filter((item) =>
-      item.attributes.description
-        .toLowerCase()
-        .includes(search?.description?.toLowerCase() || "")
-    );
-  }, [productss, search.description]);
-
-  // useEffect(() => {
-  //   console.log(search?.query);
-  // }, [search?.query]);
+  // const filteredData = useMemo(() => {
+  //   return productss.filter((item) =>
+  //     item.attributes.daru_category.data.attributes.name
+  //       .toLowerCase()
+  //       .includes(category.toLowerCase())
+  //   );
+  // }, [productss, category]);
 
   return (
     <div className={styles.App}>
-      <FilterMenu
-        search={search}
-        setSearch={setSearch}
-        category={category}
-        onClickCategory={(name: string) => onClickCategory(name)}
-        // setProducts={setProducts}
-      />
+      <div>
+        <FilterMenu
+          search={search}
+          setSearch={setSearch}
+          productss={productss}
+          setProductss={setProductss}
+          // setProducts={setProducts}
+        />
+      </div>
+
       {/* <ProductList products={products} /> */}
-      <ProductList productss={filteredData} />
+      <div>
+        <ProductList productss={filteredData} />
+      </div>
     </div>
   );
 };
