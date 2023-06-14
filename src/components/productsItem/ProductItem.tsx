@@ -1,8 +1,8 @@
 import React from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
-// import { Product } from "../../types";
 import { Productt } from "../../types/product";
+
 import MyButton from "../ui/button/MyButton";
 import styles from "./ProductItem.module.scss";
 
@@ -18,6 +18,7 @@ const ProductItem: React.FC<Props> = ({ product }) => {
     removeFromCart,
   } = useShoppingCart();
   const quantity = getItemQuantity(product.id);
+
   return (
     <div className={styles.item}>
       <img
@@ -38,7 +39,7 @@ const ProductItem: React.FC<Props> = ({ product }) => {
         <MyButton>Details</MyButton>
       </NavLink>
       {!quantity ? (
-        <MyButton onClick={() => increaseCartQuantity(product.id)}>
+        <MyButton onClick={() => increaseCartQuantity(product)}>
           + Add to cart
         </MyButton>
       ) : (
@@ -46,7 +47,7 @@ const ProductItem: React.FC<Props> = ({ product }) => {
           <div className={styles.cart_items}>
             <MyButton
               style={{ marginLeft: "20px" }}
-              onClick={() => decreaseCartQuantity(product.id)}
+              onClick={() => decreaseCartQuantity(product)}
             >
               -
             </MyButton>
@@ -55,7 +56,7 @@ const ProductItem: React.FC<Props> = ({ product }) => {
             </div>
             <MyButton
               style={{ marginRight: "20px" }}
-              onClick={() => increaseCartQuantity(product.id)}
+              onClick={() => increaseCartQuantity(product)}
             >
               +
             </MyButton>

@@ -64,13 +64,19 @@ const ProductPage: React.FC = () => {
     getProductsList({}).then((res) => setProductss(res.data));
   }, []);
 
-  const filteredData = useMemo(() => {
-    return productss.filter((item) =>
-      item.attributes.name
-        .toLowerCase()
-        .includes(search?.query?.toLowerCase() || "")
+  useEffect(() => {
+    getProductsList({ query: search?.query || "" }).then((res) =>
+      setProductss(res.data)
     );
-  }, [productss, search.query]);
+  }, [search.query]);
+
+  // const filteredData = useMemo(() => {
+  //   return productss.filter((item) =>
+  //     item.attributes.name
+  //       .toLowerCase()
+  //       .includes(search?.query?.toLowerCase() || "")
+  //   );
+  // }, [productss, search.query]);
 
   // const filteredData = useMemo(() => {
   //   return productss.filter((item) =>
@@ -94,7 +100,7 @@ const ProductPage: React.FC = () => {
 
       {/* <ProductList products={products} /> */}
       <div>
-        <ProductList productss={filteredData} />
+        <ProductList productss={productss} />
       </div>
     </div>
   );

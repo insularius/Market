@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { on } from "stream";
-import { getProductsList } from "../../services/getProductsList";
+import React from "react";
 import { Productt } from "../../types/product";
 import MyInput from "../ui/input/MyInput";
 import styles from "./FilterAccordion.module.scss";
@@ -21,7 +19,7 @@ const FilterAccordionItems: React.FC<Props> = ({
         <MyInput
           type="checkbox"
           value={1}
-          onClick={(e) => onClickCategory(+e.currentTarget.value)}
+          onClick={(e) => onClickCategory(Number(e.currentTarget.value))}
         />
         <label>Action</label>
       </div>
@@ -29,7 +27,7 @@ const FilterAccordionItems: React.FC<Props> = ({
         <MyInput
           type="checkbox"
           value={2}
-          onClick={(e) => onClickCategory(+e.currentTarget.value)}
+          onClick={(e) => onClickCategory(Number(e.currentTarget.value))}
         />
         <label>First person shooter</label>
       </div>
@@ -37,7 +35,7 @@ const FilterAccordionItems: React.FC<Props> = ({
         <MyInput
           type="checkbox"
           value={3}
-          onClick={(e) => onClickCategory(+e.currentTarget.value)}
+          onClick={(e) => onClickCategory(Number(e.currentTarget.value))}
         />
         <label>Adventure</label>
       </div>
@@ -45,7 +43,7 @@ const FilterAccordionItems: React.FC<Props> = ({
         <MyInput
           type="checkbox"
           value={4}
-          onClick={(e) => onClickCategory(+e.currentTarget.value)}
+          onClick={(e) => onClickCategory(Number(e.currentTarget.value))}
         />
         <label>RPG</label>
       </div>

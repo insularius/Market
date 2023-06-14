@@ -7,7 +7,6 @@ import Navbar from "./components/navbar/Navbar";
 import NotFoundPage from "./components/notFoundPage/NotFoundPage";
 import { Layout } from "./components/layout/Layout";
 import ProductPageInfo from "./pages/productPageInfo/ProductPageInfo";
-
 import { ShoppingCartProvider } from "./context/ShoppingCartContext";
 
 function App() {

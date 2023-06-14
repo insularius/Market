@@ -14,9 +14,16 @@ const Modal = ({ children, isOpen, setIsOpen }: Props) => {
   if (isOpen) {
     rootClasses.push(styles.active);
   }
+
+  const onContentClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    // event.preventDefault();
+  };
   return (
     <div onClick={() => setIsOpen(false)} className={rootClasses.join(" ")}>
-      <div className={styles.modalContent}>{children}</div>
+      <div onClick={onContentClick} className={styles.modalContent}>
+        {children}
+      </div>
     </div>
   );
 };

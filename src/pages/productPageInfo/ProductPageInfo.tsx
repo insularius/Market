@@ -3,16 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import { getProductItem } from "../../services/getProductItemById";
 import styles from "./ProductPageInfo.module.scss";
 import { Productt } from "../../types/product";
-
 import MyButton from "../../components/ui/button/MyButton";
-import { getProductsList } from "../../services/getProductsList";
-
 const ProductPageInfo: React.FC = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Productt>();
-  console.log(product);
 
-  //использовать отдельный инпойнт для дитейл, гетпродуктитем
+  //отдельный инпойнт
   useEffect(() => {
     if (!id) return;
     getProductItem(Number(id)).then((res) => setProduct(res.data));

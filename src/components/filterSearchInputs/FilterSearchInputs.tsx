@@ -1,12 +1,84 @@
-import React from "react";
+import { useDeferredValue, useEffect, useState, useCallback } from "react";
 import { SearchState } from "../../pages/productPage/ProductPage";
-
+import { debounce } from "lodash";
 import MyInput from "../ui/input/MyInput";
+import { getProductsList } from "../../services/getProductsList";
+
+import { Productt } from "../../types/product";
+import { useDebouncedEffect } from "../../hooks/useDebouncedEffect";
 type Props = {
   setSearch: (args: SearchState) => void;
   search: SearchState;
+  setProductss: (args: Productt[]) => void;
 };
-const FilterSearchInputs: React.FC<Props> = ({ setSearch, search }) => {
+const FilterSearchInputs: React.FC<Props> = ({
+  setSearch,
+  search,
+  setProductss,
+}) => {
+  const [inputValue, setInputValue] = useState("");
+  // variant 1 no delay
+  // const deferredInputValue = useDeferredValue(inputValue);
+  // useEffect(() => {
+  //   if (deferredInputValue.length >= 3) {
+  //     getProductsList({ query: deferredInputValue }).then((res) =>
+  //       setProductss(res.data)
+  //     );
+  //   } else if (deferredInputValue.length === 0) {
+  //     getProductsList({ query: "" }).then((res) => setProductss(res.data));
+  //   }
+  // }, [deferredInputValue, setProductss]);
+
+  //variant 2 lodash library
+  // const debouncedSetSearch = useCallback(
+  //   debounce((query: string) => {
+  //     setSearch({ ...search, query });
+  //   }, 500),
+  //   []
+  // );
+  // useEffect(() => {
+  //   debouncedSetSearch(inputValue);
+  //   return () => {
+  //     debouncedSetSearch.cancel();
+  //   };
+  // }, [inputValue, debouncedSetSearch]);
+
+  //variant 3 additional state
+  // const [deferredInputValue, setDeferredInputValue] = useState("");
+
+  // useEffect(() => {
+  //   const timerId = setTimeout(() => {
+  //     setDeferredInputValue(inputValue);
+  //   }, 500);
+
+  //   return () => clearTimeout(timerId);
+  // }, [inputValue]);
+
+  // useEffect(() => {
+  //   if (deferredInputValue.length >= 3) {
+  //     getProductsList({ query: deferredInputValue }).then((res) =>
+  //       setProductss(res.data)
+  //     );
+  //   } else if (deferredInputValue.length === 0) {
+  //     getProductsList({ query: "" }).then((res) => setProductss(res.data));
+  //   }
+  // }, [deferredInputValue, setProductss]);
+
+  //variant 4 optimized
+  useDebouncedEffect(
+    () => {
+      if (inputValue.length >= 3) {
+        getProductsList({ query: inputValue }).then((res) =>
+          setProductss(res.data)
+        );
+      } else if (inputValue.length === 0) {
+        getProductsList({ query: "" }).then((res) => setProductss(res.data));
+      }
+    },
+    500,
+    [inputValue, setProductss]
+  );
+
   return (
     <div>
       <MyInput
@@ -15,8 +87,8 @@ const FilterSearchInputs: React.FC<Props> = ({ setSearch, search }) => {
           marginTop: "5px",
           backgroundColor: "rgb(246,246,246)",
         }}
-        onChange={(e) => setSearch({ ...search, query: e.target.value })}
-        value={search.query}
+        onChange={(e) => setInputValue(e.target.value)}
+        value={inputValue}
         type="text"
         placeholder="Search by name"
       />

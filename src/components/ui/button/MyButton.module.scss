@@ -8,4 +8,18 @@
   margin-top: 5px;
   text-align: center;
   width: 100%;
+  position: relative;
+}
+
+.counter {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: red;
+  color: white;
+  border-radius: 80%;
+  padding: 3px;
+  font-size: 0.75rem;
+  min-width: 1rem;
+  text-align: center;
 }

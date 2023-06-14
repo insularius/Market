@@ -1,27 +1,52 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
-import { getProductItem } from "../../services/getProductItemById";
-import { getProductsList } from "../../services/getProductsList";
-import { Productt } from "../../types/product";
-
+import MyButton from "../ui/button/MyButton";
+import styles from "../shoppingCart/ShoppingCart.module.scss";
 const ShoppingCart = () => {
-  const [cartItems, setCartItems] = useState<Productt[]>([]);
-  // useEffect(() => {
-  //   getProductsList({}).then((res) => setCartItems(res.data));
-  // });
-  const id = cartItems.findIndex((i) => i.id === 1);
-  useEffect(() => {
-    if (!id) return;
-    getProductItem(Number(id)).then((res) => setCartItems(res.data));
-  }, [id]);
+  const {
+    cartItems,
+    increaseCartQuantity,
+    decreaseCartQuantity,
+    removeFromCart,
+  } = useShoppingCart();
 
   return (
-    <div>
+    <div className={styles.cartContent}>
       {cartItems.map((item) => (
-        <p>
-          {item.id} {item.attributes.name}
-        </p>
+        <div key={item.id} className={styles.cartItem}>
+          <img
+            src={item.attributes.image.data.attributes.url}
+            alt=""
+            className={styles.cartItemImage}
+          />
+          <div className={styles.cartItemTitle}>
+            <p>{item.attributes.name}</p>
+            <strong>
+              <span>
+                Quantity: <span>{item.quantity}</span>
+              </span>
+            </strong>
+          </div>
+          <div className={styles.cartItemButtons}>
+            <MyButton
+              className={styles.cartItemButton}
+              onClick={() => increaseCartQuantity(item)}
+            >
+              +
+            </MyButton>
+            <MyButton
+              className={styles.cartItemButton}
+              onClick={() => decreaseCartQuantity(item)}
+            >
+              -
+            </MyButton>
+            <MyButton
+              className={styles.cartItemRemoveButton}
+              onClick={() => removeFromCart(item.id)}
+            >
+              Remove from Cart
+            </MyButton>
+          </div>
+        </div>
       ))}
     </div>
   );
