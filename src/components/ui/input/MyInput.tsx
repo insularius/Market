@@ -6,8 +6,10 @@ type Props = React.DetailedHTMLProps<
   HTMLInputElement
 >;
 
-const MyInput: React.FC<Props> = ({ ...props }) => {
-  return <input className={styles.inp} {...props} />;
+const MyInput: React.FC<Props> = ({ className, ...props }) => {
+  return (
+    <input className={`inp ${className}`} checked={props.checked} {...props} />
+  );
 };
 
 export default MyInput;

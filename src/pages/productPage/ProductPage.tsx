@@ -6,20 +6,22 @@ import ProductList from "../../components/productsList/ProductList";
 import styles from "./ProductPage.module.scss";
 import { Productt } from "../../types/product";
 import { getProductsList } from "../../services/getProductsList";
-export type SearchState = {
-  query?: string;
-  description?: string;
-};
+import { getCategoriesList } from "../../services/getCategoriesList";
+import { Category } from "../../types/category";
+import { useDebouncedEffect } from "../../hooks/useDebouncedEffect";
+// export type SearchState = {
+//   query?: string;
+// };
 
 const ProductPage: React.FC = () => {
   // const [products, setProducts] = useState<Product[]>(data);
   const [productss, setProductss] = useState<Productt[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   // const [product, setProduct] = useState<Productt[]>([]);
-
-  const [search, setSearch] = useState<SearchState>({
-    query: "",
-    description: "",
-  });
+  // const [search, setSearch] = useState<SearchState>({
+  //   query: "",
+  // });
+  const [search, setSearch] = useState("");
 
   // useEffect(() => {
   //   setProductss((prev) =>
@@ -31,44 +33,16 @@ const ProductPage: React.FC = () => {
   //   );
   // }, [search.query]);
 
-  // useEffect(() => {
-  //   setProducts((prev) =>
-  //     data.filter((item) =>
-  //       item.description
-  //         .toLowerCase()
-  //         .includes(search?.description?.toLowerCase() || "")
-  //     )
-  //   );
-  // }, [search.description]);
-
-  // useEffect(() => {
-  //   setProducts((prev) =>
-  //     data.filter((item) =>
-  //       item.description.toLocaleLowerCase().includes(category)
-  //     )
-  //   );
-  // }, [category]);
-
-  //можно попробовать по онклику передавать
-  // const onCategoryChange = (v: number) => {
-  //   getProductCategory(v).then((res) => setProductss(res.data));
-  // };
-
-  //получение всех продуктов
-  // useEffect(() => {
-  //   getProductList().then((res) => setProductss(res.data));
-  // }, []);
-
-  //изменённое получение продуктов с категориями (пустой объект передаём, так как в аргументах инпойнта принимаются объё)
   useEffect(() => {
-    getProductsList({}).then((res) => setProductss(res.data));
+    getCategoriesList().then((res) => setCategories(res.data));
   }, []);
 
-  useEffect(() => {
-    getProductsList({ query: search?.query || "" }).then((res) =>
-      setProductss(res.data)
-    );
-  }, [search.query]);
+  // useEffect(() => {
+  //   getProductsList({ query: search?.query || "" }).then((res) =>
+  //     setProductss(res.data)
+  //   );
+  //   console.log("вызвана");
+  // }, [search.query]);
 
   // const filteredData = useMemo(() => {
   //   return productss.filter((item) =>
@@ -94,7 +68,8 @@ const ProductPage: React.FC = () => {
           setSearch={setSearch}
           productss={productss}
           setProductss={setProductss}
-          // setProducts={setProducts}
+          categories={categories}
+          setCategories={setCategories}
         />
       </div>
 

@@ -1,0 +1,50 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  margin-top: 50px;
+  width: 500px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 0.5rem 0;
+}
+
+.inputLabel {
+  margin-bottom: 0.5rem;
+}
+
+.categorySelect {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.submitButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  color: white;
+  background-color: #3f51b5;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.backButton {
+  margin-top: 2rem;
+  color: #3f51b5;
+}
+.textarea {
+  background-color: #ffffff;
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+}

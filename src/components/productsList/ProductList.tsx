@@ -1,5 +1,6 @@
 import React from "react";
 import { Productt } from "../../types/product";
+import Loader from "../loader/Loader";
 import ProductItem from "../productsItem/ProductItem";
 import styles from "./ProductList.module.scss";
 
@@ -9,7 +10,11 @@ type Props = {
 
 const ProductList: React.FC<Props> = ({ productss }) => {
   if (!productss.length) {
-    return <h1>Nothing's here</h1>;
+    return (
+      <div style={{ marginLeft: "650px" }}>
+        <Loader />
+      </div>
+    );
   }
 
   return (

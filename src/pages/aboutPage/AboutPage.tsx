@@ -1,5 +1,7 @@
 const About = () => {
-  return <div>About</div>;
+  //FormData отправляется в request body
+
+  return <>About</>;
 };
 
 export default About;

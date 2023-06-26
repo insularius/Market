@@ -30,6 +30,12 @@ const Navbar = () => {
         >
           About
         </NavLink>
+        <NavLink
+          className={({ isActive }) => (isActive ? styles.active : "")}
+          to={"/admin/products"}
+        >
+          Admin panel
+        </NavLink>
         {cartQuantity > 0 && (
           <button onClick={() => setIsOpen(true)} className={styles.cartButton}>
             <svg

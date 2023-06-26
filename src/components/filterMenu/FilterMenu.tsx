@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useDebouncedEffect } from "../../hooks/useDebouncedEffect";
-import { SearchState } from "../../pages/productPage/ProductPage";
 import { getProductsList } from "../../services/getProductsList";
+import { Category } from "../../types/category";
 import { Productt } from "../../types/product";
+import CreateProductForm from "../createProduct/CreateProductFrom";
+import EditProduct from "../editProduct/EditProduct";
 import FilterAccordion from "../filterAccordion/FilterAccordion";
 import FilterAccordionItems from "../filterAccordionItems/FilterAccordionItems";
 import FilterSearchInputs from "../filterSearchInputs/FilterSearchInputs";
@@ -12,24 +14,26 @@ import MyButton from "../ui/button/MyButton";
 import styles from "./FilterMenu.module.scss";
 
 type Props = {
-  search: SearchState;
-  setSearch: (args: SearchState) => void;
+  search: string;
+  setSearch: (args: string) => void;
   productss: Productt[];
   setProductss: (args: Productt[]) => void;
+  categories: Category[];
+  setCategories: (args: Category[]) => void;
 };
 const FilterMenu: React.FC<Props> = ({
   search,
   setSearch,
   productss,
   setProductss,
+  categories,
+  setCategories,
 }) => {
   const [isOpenGenre, setIsOpenGenre] = useState(false);
   const [isOpenPrice, setIsOpenPrice] = useState(false);
-  const [categoryId, setCategoryId] = useState<number[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<number[]>([]); //постараться избавиться и использовать стейт продуктпейдж
   const [counter, setCounter] = useState(0);
   const [tempProductss, setTempProductss] = useState<Productt[]>([]);
-  // Отложенный список выбранных категорий, обновляется с задержкой после выбора
-  // const [debouncedCategoryId, setDebouncedCategoryId] = useState<number[]>([]);
   const handleToggleGenre = () => {
     setIsOpenGenre((prev) => !prev);
   };
@@ -37,28 +41,38 @@ const FilterMenu: React.FC<Props> = ({
   const handleTogglePrice = () => {
     setIsOpenPrice((prev) => !prev);
   };
+
   const resetCategories = () => {
-    setCategoryId([]);
+    setSelectedCategories([]);
   };
 
   const handleReset = () => {
     resetCategories();
+    setSearch("");
     getProductsList({}).then((res) => setProductss(res.data));
     setCounter(0);
-    handleToggleGenre();
-    // handleTogglePrice();
   };
 
   const handleCounterClick = () => {
     setProductss(tempProductss);
   };
 
-  const onClickCategory = (v: number) => {
-    setCategoryId((s) => {
-      if (s.includes(v)) {
-        return s.filter((id: number) => id !== v);
+  // const onClickCategory = (v: number) => {
+  //   setCategoryId((s) => {
+  //     if (s.includes(v)) {
+  //       return s.filter((id: number) => id !== v);
+  //     }
+  //     return [...s, v];
+  //   });
+  // };
+
+  const onClickCategory = (categoryId: number) => {
+    setSelectedCategories((prev) => {
+      if (prev.includes(categoryId)) {
+        return prev.filter((id) => id !== categoryId);
+      } else {
+        return [...prev, categoryId];
       }
-      return [...s, v];
     });
   };
 
@@ -123,19 +137,19 @@ const FilterMenu: React.FC<Props> = ({
 
   useDebouncedEffect(
     () => {
-      if (categoryId.length === 0) {
+      if (selectedCategories.length === 0) {
         getProductsList({}).then((res) => setProductss(res.data));
         setTempProductss([]);
         setCounter(0);
       } else {
-        getProductsList({ categoryId }).then((res) => {
+        getProductsList({ categoryId: selectedCategories }).then((res) => {
           setTempProductss(res.data);
           setCounter(res.data.length);
         });
       }
     },
-    500,
-    [categoryId, setProductss]
+    1500,
+    [selectedCategories, setProductss]
   );
 
   return (
@@ -153,7 +167,10 @@ const FilterMenu: React.FC<Props> = ({
           <FilterAccordionItems
             productss={productss}
             setProductss={setProductss}
+            // onClickCategory={onClickCategory}
+            categories={categories}
             onClickCategory={onClickCategory}
+            selectedCategories={selectedCategories}
           />
         )}
       </div>
@@ -161,11 +178,24 @@ const FilterMenu: React.FC<Props> = ({
       {isOpenPrice && (
         <PriceSlider productss={productss} setProductss={setProductss} />
       )}
+      {/* <div>Create product</div>
+      <br />
+      <CreateProductForm
+        categories={categories}
+        setCategories={setCategories}
+      />
+      <br />
+      <div>Update form</div>
+      <br />
+      <EditProduct productss={productss} setProductss={setProductss} /> */}
       <div className={styles.btnDiv}>
         <MyButton onClick={handleReset}>Reset</MyButton>
         <MyButton counter={counter} onClick={handleCounterClick}>
           Show products
         </MyButton>
+        {/* {category.map((item) => (
+          <div>{item.attributes.daru_category.data.id}</div>
+        ))} */}
       </div>
     </div>
   );

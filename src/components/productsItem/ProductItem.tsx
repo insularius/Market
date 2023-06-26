@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import { Productt } from "../../types/product";
+import Loader from "../loader/Loader";
 
 import MyButton from "../ui/button/MyButton";
 import styles from "./ProductItem.module.scss";
@@ -22,7 +23,7 @@ const ProductItem: React.FC<Props> = ({ product }) => {
   return (
     <div className={styles.item}>
       <img
-        src={product.attributes.image.data.attributes.url}
+        src={product.attributes.image?.data?.attributes.url} //product.attributes.image.data.attributes.url
         className={styles.image}
         alt=""
       />
@@ -70,10 +71,11 @@ const ProductItem: React.FC<Props> = ({ product }) => {
       ) : null}
 
       <NavLink
-        to={`/store/category/${product.attributes.daru_category.data.attributes.name}`}
+        to={`/store/category/${product.attributes.daru_category?.attributes?.name}`}
       ></NavLink>
     </div>
   );
 };
 
 export default ProductItem;
+//product.attributes.daru_category.data.attributes.name

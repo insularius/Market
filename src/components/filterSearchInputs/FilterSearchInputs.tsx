@@ -1,14 +1,11 @@
-import { useDeferredValue, useEffect, useState, useCallback } from "react";
-import { SearchState } from "../../pages/productPage/ProductPage";
 import { debounce } from "lodash";
 import MyInput from "../ui/input/MyInput";
 import { getProductsList } from "../../services/getProductsList";
-
 import { Productt } from "../../types/product";
 import { useDebouncedEffect } from "../../hooks/useDebouncedEffect";
 type Props = {
-  setSearch: (args: SearchState) => void;
-  search: SearchState;
+  setSearch: (args: string) => void;
+  search: string;
   setProductss: (args: Productt[]) => void;
 };
 const FilterSearchInputs: React.FC<Props> = ({
@@ -16,7 +13,8 @@ const FilterSearchInputs: React.FC<Props> = ({
   search,
   setProductss,
 }) => {
-  const [inputValue, setInputValue] = useState("");
+  // const [inputValue, setInputValue] = useState("");
+
   // variant 1 no delay
   // const deferredInputValue = useDeferredValue(inputValue);
   // useEffect(() => {
@@ -65,18 +63,32 @@ const FilterSearchInputs: React.FC<Props> = ({
   // }, [deferredInputValue, setProductss]);
 
   //variant 4 optimized
+  // useDebouncedEffect(
+  //   () => {
+  //     if (inputValue.length >= 3) {
+  //       getProductsList({ query: inputValue }).then((res) =>
+  //         setProductss(res.data)
+  //       );
+  //     } else if (inputValue.length === 0) {
+  //       getProductsList({ query: "" }).then((res) => setProductss(res.data));
+  //     }
+  //   },
+  //   500,
+  //   [inputValue, setProductss]
+  // );
+
   useDebouncedEffect(
     () => {
-      if (inputValue.length >= 3) {
-        getProductsList({ query: inputValue }).then((res) =>
+      if (search.length >= 3) {
+        getProductsList({ query: search }).then((res) =>
           setProductss(res.data)
         );
-      } else if (inputValue.length === 0) {
+      } else if (search.length === 0) {
         getProductsList({ query: "" }).then((res) => setProductss(res.data));
       }
     },
-    500,
-    [inputValue, setProductss]
+    1000,
+    [search, setProductss]
   );
 
   return (
@@ -87,8 +99,8 @@ const FilterSearchInputs: React.FC<Props> = ({
           marginTop: "5px",
           backgroundColor: "rgb(246,246,246)",
         }}
-        onChange={(e) => setInputValue(e.target.value)}
-        value={inputValue}
+        onChange={(e) => setSearch(e.target.value)}
+        value={search}
         type="text"
         placeholder="Search by name"
       />
