@@ -1,8 +1,6 @@
 import React from "react";
-// import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Productt } from "../../types/product";
-import styles from "./Slider.module.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 import "swiper/swiper-bundle.css";
@@ -25,7 +23,7 @@ const Slider: React.FC<Props> = ({ productss }) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "100%",
+              height: "500px",
             }}
           >
             <img
@@ -33,9 +31,6 @@ const Slider: React.FC<Props> = ({ productss }) => {
               alt={product.attributes.name}
               style={{ width: "400px", height: "auto" }}
             />
-          </div>
-          <div>
-            <p className={styles.name}>{product.attributes.name}</p>
           </div>
         </SwiperSlide>
       ))}
