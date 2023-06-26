@@ -1,18 +1,6 @@
-.slider {
-  width: 100%;
-  //   height: auto;
-  margin-top: 50px;
-}
-
-.slide {
+.name {
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-.image {
-  max-width: 400px;
-  height: auto;
-
-  object-fit: contain;
+  font-weight: 900;
+  margin-top: 20px;
 }
