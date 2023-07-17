@@ -3,6 +3,7 @@ import { PostProductFields } from "../types/postProductFields";
 // import { updateProduct } from './editProduct';
 import { ProductFields } from "../types/product";
 import { uploadProductImage } from "./ uploadProductImage";
+
 import axios from "axios";
 const API_ROOT = "https://dario-cms.dar-dev.zone/api";
 

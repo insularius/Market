@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../context/Auth";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import Modal from "../modal/Modal";
 import ShoppingCart from "../shoppingCart/ShoppingCartItems";
 import styles from "./Navbar.module.scss";
+import { FaUser } from "react-icons/fa";
 
 const Navbar = () => {
   const { cartQuantity } = useShoppingCart();
   const [isOpen, setIsOpen] = useState(false);
-
+  const { logout, isAuthorized } = useAuth();
   return (
     <div>
       <nav className={styles.navBar}>
@@ -30,11 +32,69 @@ const Navbar = () => {
         >
           About
         </NavLink>
+        {isAuthorized && (
+          <NavLink
+            className={({ isActive }) => (isActive ? styles.active : "")}
+            to={"/admin/products"}
+          >
+            Admin panel
+          </NavLink>
+        )}
+        <NavLink
+          to={"/dashboard"}
+          className={({ isActive }) => (isActive ? styles.active : "")}
+          style={{
+            position: "fixed",
+            right: "200px",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          {isAuthorized && (
+            <FaUser
+              style={{
+                width: "20px",
+                height: "20px",
+              }}
+            />
+          )}
+        </NavLink>
         <NavLink
           className={({ isActive }) => (isActive ? styles.active : "")}
-          to={"/admin/products"}
+          to={"/signin"}
+          style={{
+            position: "fixed",
+            right: "100px",
+            display: "flex",
+            alignItems: "center",
+          }}
         >
-          Admin panel
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            {isAuthorized ? <p onClick={logout}>Log off</p> : <p>Log in</p>}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              style={{ marginLeft: "5px", width: "24px", height: "24px" }}
+            >
+              <g
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.5"
+              >
+                <path d="M16 11H7"></path>
+                <path d="M10 8l-3 3 3 3"></path>
+                <path d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
+              </g>
+            </svg>
+          </div>
         </NavLink>
         {cartQuantity > 0 && (
           <button onClick={() => setIsOpen(true)} className={styles.cartButton}>

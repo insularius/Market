@@ -11,13 +11,15 @@ import MyBtn from "../../components/ui/button/MyButton";
 const ProductPageInfo: React.FC = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Productt>();
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
 
   useDebouncedEffect(
     () => {
       getProductItemById(Number(id)).then((res) => {
         setProduct(res.data);
-        setIsLoading(false);
+        // setIsLoading(false);
+        setIsModalOpen(false);
       });
     },
     500,
@@ -27,7 +29,7 @@ const ProductPageInfo: React.FC = () => {
   if (!product) {
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Loader />
+        <Loader isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       </div>
     );
   }

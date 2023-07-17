@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Productt } from "../../types/product";
 import Loader from "../loader/Loader";
 import ProductItem from "../productsItem/ProductItem";
@@ -9,10 +9,11 @@ type Props = {
 };
 
 const ProductList: React.FC<Props> = ({ productss }) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
   if (!productss.length) {
     return (
       <div style={{ marginLeft: "650px" }}>
-        <Loader />
+        <Loader isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       </div>
     );
   }

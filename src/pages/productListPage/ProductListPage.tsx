@@ -7,7 +7,8 @@ import styles from "../productListPage/ProductListPage.module.scss";
 import { deleteProduct } from "../../services/deleteProduct";
 import MyBtn from "../../components/ui/button/MyButton";
 import Skeleton from "../../components/skeleton/Skeleton";
-
+import RegistrationForm from "../../components/auth/Register";
+import { FaTrash } from "react-icons/fa";
 const ProductListPage = () => {
   const [productss, setProductss] = useState<Productt[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -51,17 +52,6 @@ const ProductListPage = () => {
       });
   };
 
-  // <div>
-  //     {isLoading
-  //       ? Array(10) // или любое другое количество
-  //           .fill(null)
-  //           .map((_, index) => <SkeletonProduct key={index} />)
-  //       : products.map((product) => (
-  //           <ProductCard key={product.id} product={product} />
-  //         ))}
-  //     <Link to="/admin/products/create">Create Product</Link>
-  //   </div>
-
   return (
     <div className={styles.container}>
       <div className={styles.list_header}>
@@ -83,6 +73,11 @@ const ProductListPage = () => {
                 </Link>
                 <MyBtn onClick={() => deleteProductHandler(item.id)}>
                   Delete
+                  <FaTrash
+                    style={{
+                      marginLeft: "5px",
+                    }}
+                  />
                 </MyBtn>
               </div>
             </div>

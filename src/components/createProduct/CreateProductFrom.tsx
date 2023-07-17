@@ -62,7 +62,7 @@ Args) => {
       console.error("Error creating product:", error);
     }
   };
-  //if(productId) ? EditPage : Create
+
   return (
     <form onSubmit={handleSubmit}>
       <br />

@@ -1,0 +1,47 @@
+.avatar {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.imageUpload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: teal;
+  color: rgb(240, 240, 240);
+  top: 75%;
+  left: 55%;
+  border-radius: 50%;
+}
+.plusButton {
+  font-size: 20px;
+  align-self: center;
+  text-align: center;
+  cursor: pointer;
+}
+h5,
+h3 {
+  margin: 0px;
+}
+.button:hover {
+  background-color: #1976d2;
+  color: white;
+}
+.emailField {
+  display: flex;
+  gap: 100px;
+}
+.emailValue {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
